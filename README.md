@@ -86,19 +86,19 @@ After install, just talk normally. The skills trigger themselves.
 ### At the start of a session
 
 ```
-You: "Hey, what do you remember about my P2P workshop?"
+You: "What do you remember about my dashboard project?"
 
 Claude: Picking up where we left off:
 
-Current state — P2P Hyderabad May 8+9, 100+ registrations for 60 seats.
-Confirmation emails drafted for Apr 28 / May 1 / May 7 / waitlist.
+Current state — Auth flow shipped to staging. API rate limiting
+implemented with Redis backend. Dashboard refactor in progress.
 
 Pending items:
-→ TIU detailed agenda
-→ Chitkara V2V edition collateral
-→ Plugin v0.2 release
+→ Finish the analytics widget refactor
+→ Review PR #142 from Sarah
+→ Migrate billing service to new endpoint
 
-Active projects: P2P Hyderabad, V2V Enterprise, memory-map plugin.
+Active projects: dashboard refactor, auth flow, billing migration.
 ```
 
 ### At the end of a session
@@ -108,11 +108,11 @@ You: "Save this conversation"
 
 Claude: MEMORY MAP — updated April 27 2026
 
-UPDATED  →  P2P Hyderabad event (4 emails confirmed)
+UPDATED  →  Auth flow status (now in staging)
 UPDATED  →  Current state snapshot
-NEW      →  Enterprise pitch emails (2 variants)
+NEW      →  API rate limiting decisions (Redis backend)
 ──────────────────────────────────────────────────
-UNCHANGED: 14 entries
+UNCHANGED: 8 entries
 ```
 
 ### When memory gets cluttered
@@ -123,13 +123,13 @@ You: "Clean up the memory"
 Claude: MEMORY PRUNE — proposed changes
 
 REMOVE (stale)
-→ Entry 18: TIU registration link (event closed)
-→ Entry 12: P2P landing page draft v1 (superseded by v2)
+→ Entry 7: "Old auth design (v1)" — superseded by v3 in entry 11
+→ Entry 14: "Q1 sprint planning" — quarter is closed
 
 CONSOLIDATE
-→ Entries 9 + 10 → single "V2V EDITIONS" entry
+→ Entries 3 + 9 → single "API conventions" entry
 
-KEEP all 14 operating preference entries
+KEEP all 6 operating preference entries
 
 Apply these changes? [yes / modify / cancel]
 ```
@@ -146,7 +146,7 @@ The skills activate on natural language, no commands to memorise.
 | **memory-recall** | what do you remember · what's the context · where did we leave off · catch me up · show me the memory map |
 | **memory-prune** | clean up memory · prune memory · consolidate memory · trim the memory map |
 
-All three also fire **proactively** when conditions are right, at the close of a productive session, at the start of a new one, or when memory is approaching its limits.
+All three also fire **proactively** when conditions are right — at the close of a productive session, at the start of a new one, or when memory is approaching its limits.
 
 ---
 
@@ -161,32 +161,33 @@ Plain markdown, readable, editable, version-controllable:
 Last updated: April 27 2026
 
 ## 1. CURRENT STATE SNAPSHOT (April 2026)
-P2P Hyderabad May 8+9 imminent: confirmation emails drafted. Enterprise brief
-built with role cards. Memory plugin v0.1 ready to ship.
+Auth flow in staging. API rate limiting shipped with Redis. Dashboard refactor
+in progress. Next: analytics widget, PR #142 review, billing migration.
 
-## 2. P2P HYDERABAD EVENT
-T-Hub 6F, Hitech City. May 8+9 2025. 9:30 AM. 100+ reg, 60 seats.
+## 2. AUTH SERVICE
+JWT with refresh tokens. Redis session store. 15-min access, 7-day refresh.
+PR: github.com/team/repo/pull/127. Owner: backend team.
 
-## 3. PWP OPERATING PROTOCOL
-Plan, execute, verify, ship. AI proposes, user decides. No code without a plan.
+## 3. CODING CONVENTIONS
+TypeScript strict mode. Vitest for tests. Conventional commits. Trunk-based dev.
 ```
 
 You can edit this file directly. memory-prune will respect your edits.
 
 ### claude.ai: Persistent memory API
 
-Stored via Anthropic's `memory_user_edits` tool. Visible in Settings → Memory. Works the same way functionally, same category labels, same density rules, just managed via API instead of file.
+Stored via Anthropic's `memory_user_edits` tool. Visible in Settings → Memory. Works the same way functionally — same category labels, same density rules, just managed via API instead of file.
 
 ---
 
 ## Design principles
 
-- **Proactive, not reactive**, skills run when they should, without being asked
-- **Replace over accumulate**, stale entries are replaced, never stacked
-- **Density over prose**, every entry is scannable, fact-packed, no filler
-- **One source of truth**, `CURRENT STATE SNAPSHOT` is always exactly one entry
-- **Confirm before destruction**, memory-prune always proposes, never deletes autonomously
-- **Environment-aware**, same skill, right storage for the right tool
+- **Proactive, not reactive** — skills run when they should, without being asked
+- **Replace over accumulate** — stale entries are replaced, never stacked
+- **Density over prose** — every entry is scannable, fact-packed, no filler
+- **One source of truth** — `CURRENT STATE SNAPSHOT` is always exactly one entry
+- **Confirm before destruction** — memory-prune always proposes, never deletes autonomously
+- **Environment-aware** — same skill, right storage for the right tool
 
 ---
 
@@ -224,10 +225,10 @@ Each skill is self-contained and can be used independently. The plugin bundles t
 
 ## Roadmap
 
-- [x] **v0.1**, memory-map, memory-recall, memory-prune
-- [ ] **v0.2**, multi-project memory (separate stores per repo or workspace)
-- [ ] **v0.3**, memory export/import for sharing project context across teams
-- [ ] **v0.4**, memory diffing across sessions ("what changed since last week?")
+- [x] **v0.1** — memory-map, memory-recall, memory-prune
+- [ ] **v0.2** — multi-project memory (separate stores per repo or workspace)
+- [ ] **v0.3** — memory export/import for sharing project context across teams
+- [ ] **v0.4** — memory diffing across sessions ("what changed since last week?")
 
 Track progress in [issues](https://github.com/shandar/memory-map/issues) and [discussions](https://github.com/shandar/memory-map/discussions).
 
@@ -235,15 +236,15 @@ Track progress in [issues](https://github.com/shandar/memory-map/issues) and [di
 
 ## Built by
 
-[Shandar Junaid](https://shandarjunaid.com), Founder, [Affordance Design Studio](https://affordance.design), [Vibe Coding School](https://vibecodingschool.in)
+[Shandar Junaid](https://shandarjunaid.com) — Founder, [Affordance Design Studio](https://affordance.design)
 
-If you build on top of this, I would love to see what you make. Tag me on [LinkedIn](https://www.linkedin.com/in/shandarjunaid/) or [X](https://x.com/shandarjunaid).
+If you build on top of this, I would love to see what you make. Tag me on [LinkedIn](https://www.linkedin.com/in/shandarjunaid/) or [X](https://x.com/pixel8d).
 
 ---
 
 ## License
 
-MIT, use it, fork it, extend it. See [LICENSE](LICENSE).
+MIT — use it, fork it, extend it. See [LICENSE](LICENSE).
 
 ---
 
