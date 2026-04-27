@@ -1,0 +1,62 @@
+{
+  "name": "memory-map",
+  "version": "0.1.0",
+  "description": "A complete memory loop for Claude — snapshot, recall, and prune project context across sessions. Three skills bundled as one plugin.",
+  "author": "Shandar Junaid · Affordance Design Studio",
+  "homepage": "https://github.com/shandar/memory-map",
+  "repository": "https://github.com/shandar/memory-map",
+  "license": "MIT",
+  "compatibility": [
+    "claude-code",
+    "claude-ai",
+    "cursor",
+    "windsurf",
+    "codex"
+  ],
+  "skills": [
+    {
+      "name": "memory-map",
+      "path": "skills/memory-map",
+      "description": "Snapshot project context to persistent memory at session close.",
+      "triggers": [
+        "save this",
+        "snapshot this",
+        "memorise this chat",
+        "update your memory",
+        "store this session",
+        "don't lose this context"
+      ]
+    },
+    {
+      "name": "memory-recall",
+      "path": "skills/memory-recall",
+      "description": "Load and summarise stored memory at session start or on demand.",
+      "triggers": [
+        "what do you remember",
+        "what's the context",
+        "where did we leave off",
+        "catch me up",
+        "show me the memory map"
+      ]
+    },
+    {
+      "name": "memory-prune",
+      "path": "skills/memory-prune",
+      "description": "Clean stale, redundant, or outdated entries from memory store.",
+      "triggers": [
+        "clean up memory",
+        "prune memory",
+        "consolidate memory",
+        "trim the memory map"
+      ]
+    }
+  ],
+  "tags": [
+    "memory",
+    "context",
+    "productivity",
+    "session-management",
+    "claude-code",
+    "claude-ai"
+  ]
+}
