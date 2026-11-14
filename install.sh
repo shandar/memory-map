@@ -1,42 +1,49 @@
 #!/bin/bash
-# memory-map plugin — local installer for Claude Code
+# memory-map: local installer for Claude Code setups without the plugin system.
+# Installs from the checkout this script lives in, so what you read is what you get.
 # https://github.com/shandar/memory-map
+#
+# Usage (from a clone):  bash install.sh
 
-set -e
+set -euo pipefail
 
 CLAUDE_DIR="${HOME}/.claude"
 SKILLS_DIR="${CLAUDE_DIR}/skills"
-REPO_URL="https://github.com/shandar/memory-map.git"
-TEMP_DIR="$(mktemp -d)"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SRC_DIR="${SCRIPT_DIR}/plugins/memory-map/skills"
+STAMP="$(date +%Y%m%d-%H%M%S)"
+SKILLS=(memory-map memory-recall memory-prune)
 
 echo "──────────────────────────────────────────"
-echo "  memory-map plugin installer"
-echo "  v0.2.0 · MIT · Affordance Design Studio"
+echo "  memory-map installer"
+echo "  v0.2.1 · MIT · Affordance Design Studio"
 echo "──────────────────────────────────────────"
 echo ""
 
-# Create skills directory if it doesn't exist
+# Check the source before touching anything in ~/.claude
+for skill in "${SKILLS[@]}"; do
+  if [ ! -f "${SRC_DIR}/${skill}/SKILL.md" ]; then
+    echo "✗ ${SRC_DIR}/${skill}/SKILL.md not found."
+    echo "  Run this script from a full clone of the memory-map repo:"
+    echo "    git clone https://github.com/shandar/memory-map.git && cd memory-map && bash install.sh"
+    exit 1
+  fi
+done
+
 mkdir -p "${SKILLS_DIR}"
 echo "✓ Skills directory ready: ${SKILLS_DIR}"
-
-# Clone the repo to a temp location
 echo ""
-echo "→ Cloning memory-map..."
-git clone --depth 1 "${REPO_URL}" "${TEMP_DIR}/memory-map" 2>&1 | sed 's/^/  /'
-
-# Install each skill
-echo ""
-echo "→ Installing skills..."
-for skill in memory-map memory-recall memory-prune; do
-  if [ -d "${SKILLS_DIR}/${skill}" ]; then
-    echo "  ⚠  ${skill} already exists — backing up to ${skill}.backup-$(date +%Y%m%d)"
-    mv "${SKILLS_DIR}/${skill}" "${SKILLS_DIR}/${skill}.backup-$(date +%Y%m%d)"
+echo "→ Installing skills from ${SRC_DIR}"
+for skill in "${SKILLS[@]}"; do
+  if [ -e "${SKILLS_DIR}/${skill}" ]; then
+    mv "${SKILLS_DIR}/${skill}" "${SKILLS_DIR}/${skill}.backup-${STAMP}"
+    echo "  ⚠  ${skill} already existed, backed up to ${skill}.backup-${STAMP}"
   fi
-  cp -r "${TEMP_DIR}/memory-map/skills/${skill}" "${SKILLS_DIR}/${skill}"
+  cp -R "${SRC_DIR}/${skill}" "${SKILLS_DIR}/${skill}"
   echo "  ✓ Installed ${skill}"
 done
 
-# Initialise memory.md if it doesn't exist
+# Initialise memory.md if it does not exist
 if [ ! -f "${CLAUDE_DIR}/memory.md" ]; then
   cat > "${CLAUDE_DIR}/memory.md" << 'EOF'
 # Claude Memory Map
@@ -48,18 +55,18 @@ EOF
   echo "  ✓ Initialised ${CLAUDE_DIR}/memory.md"
 fi
 
-# Cleanup
-rm -rf "${TEMP_DIR}"
-
 echo ""
 echo "──────────────────────────────────────────"
-echo "  ✓ memory-map plugin installed"
+echo "  ✓ memory-map installed"
 echo "──────────────────────────────────────────"
 echo ""
 echo "Next steps:"
 echo "  1. Restart Claude Code to load the new skills"
 echo "  2. Try: 'what do you remember about my projects?'"
 echo "  3. At session close: 'save this conversation'"
+echo ""
+echo "Backup folders (*.backup-*) still contain a SKILL.md. Delete them once you"
+echo "are happy with the install, or the old skills load alongside the new ones."
 echo ""
 echo "Memory store: ${CLAUDE_DIR}/memory.md"
 echo "Skills: ${SKILLS_DIR}/{memory-map,memory-recall,memory-prune}"

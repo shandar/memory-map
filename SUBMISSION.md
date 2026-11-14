@@ -2,12 +2,15 @@
 
 Pre-written answers for the Claude plugin directory submission form. Copy each block into the matching field.
 
-**Icon:** `.claude-plugin/icon.png` (1024 px, rendered from `docs/brand/icon-source.svg`). The directory takes the listing icon from the first submission only, and later changes do not update it, so confirm you are happy with it before you submit.
+**Plugin folder:** `plugins/memory-map/` (the repo root holds the marketplace). It contains only markdown, JSON, and the icon.
+
+**Icon:** `plugins/memory-map/.claude-plugin/icon.png` (1024 px, rendered from `docs/brand/icon-source.svg`). The directory takes the listing icon from the first submission only, and later changes do not update it, so confirm you are happy with it before you submit.
 
 **Before submitting, run:**
 
 ```bash
-claude plugin validate . --profile directory --strict
+claude plugin validate plugins/memory-map --profile directory --strict
+claude plugin validate .claude-plugin/marketplace.json --strict
 ```
 
 It must pass with zero warnings.
@@ -76,7 +79,7 @@ MIT
 
 ### Version
 ```
-0.2.0
+0.2.1
 ```
 
 ### Install

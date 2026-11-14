@@ -49,7 +49,7 @@ cat ~/.claude/memory.md
 
 **Back up before any change:**
 ```bash
-[ -f ~/.claude/memory.md ] && cp ~/.claude/memory.md ~/.claude/memory.md.backup-$(date +%Y%m%d)
+[ -f ~/.claude/memory.md ] && cp ~/.claude/memory.md ~/.claude/memory.md.backup-$(date +%Y%m%d-%H%M%S)
 ```
 
 **Edit only the sections that change.** Use your file-edit tool to replace a single
@@ -93,7 +93,7 @@ EOF
 
 ## CLAUDE.md integration (optional)
 
-If the project has a `CLAUDE.md`, add a reference at the top:
+If the project has a `CLAUDE.md` without this pointer, ask the user once whether to add it. Add it at the top only after a yes; never edit `CLAUDE.md` without asking:
 
 ```markdown
 ## Persistent Memory

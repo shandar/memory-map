@@ -30,7 +30,7 @@ What should have happened instead.
 - [ ] Other: ___
 
 OS: macOS / Linux / Windows
-Plugin version: v0.2.0
+Plugin version: v0.2.1
 
 ## Memory file contents (if relevant)
 

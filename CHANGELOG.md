@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.2.1] — 2026-11-14
+
+### Plugin folder for directory review
+
+**Changed**
+- The plugin now lives in `plugins/memory-map/` and the repo root holds only the marketplace. The submitted plugin is markdown, JSON, and one PNG; `install.sh` and the icon's SVG source stay in the repo but are no longer part of the plugin
+- The plugin has its own README for reviewers and users
+
+**Removed**
+- The `curl | bash` one-line install from the README. Clone the repo and run `bash install.sh` after reading it, or use the plugin
+
+**Fixed**
+- `install.sh` installs from the clone it runs in instead of re-downloading `main`, checks its source before touching `~/.claude/skills`, and fails loudly (`set -euo pipefail`)
+- Backups of `~/.claude/memory.md` and of replaced skill folders are timestamped to the second, so a second save on the same day no longer overwrites the first backup
+- The optional `CLAUDE.md` pointer is only added after the user says yes
+
+Install commands are unchanged. Manual installs now copy from `plugins/memory-map/skills/`.
+
 ## [0.2.0] — 2026-11-14
 
 ### Claude Code plugin release

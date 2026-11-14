@@ -6,14 +6,14 @@
   },
   "metadata": {
     "description": "memory-map: a complete memory loop for Claude",
-    "version": "0.2.0"
+    "version": "0.2.1"
   },
   "plugins": [
     {
       "name": "memory-map",
-      "source": "./",
+      "source": "./plugins/memory-map",
       "description": "Snapshot, recall, and prune project context across sessions. A global cross-project index plus a STATUS.md in each project, so context survives long absences. Markdown only: no hooks, no scripts, no keys.",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "author": {
         "name": "Shandar Junaid",
         "email": "hello@affordance.design"

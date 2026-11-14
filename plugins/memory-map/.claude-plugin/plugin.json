@@ -1,6 +1,6 @@
 {
   "name": "memory-map",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A complete memory loop for Claude. Snapshot, recall, and prune project context across sessions with two tiers: a global cross-project index and a STATUS.md in each project folder. Three skills plus /memory-map:save, :status, :recall and :prune. Markdown only: no hooks, no scripts, no network calls. Pruning never deletes without your yes.",
   "author": {
     "name": "Shandar Junaid",
