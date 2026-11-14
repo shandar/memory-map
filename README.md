@@ -3,7 +3,7 @@
 **A complete memory loop for Claude. Snapshot, recall, and prune project context across sessions.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
-[![Version](https://img.shields.io/badge/version-0.1.0-orange.svg)](https://github.com/shandar/memory-map/releases)
+[![Version](https://img.shields.io/badge/version-0.2.0-orange.svg)](https://github.com/shandar/memory-map/releases)
 [![Compatible](https://img.shields.io/badge/works%20with-Claude%20Code%20%7C%20claude.ai-blue.svg)](#install)
 [![SKILL.md](https://img.shields.io/badge/format-SKILL.md-purple.svg)](https://docs.claude.com)
 
@@ -25,7 +25,7 @@ Three skills that give Claude a working memory across sessions:
 
 | Skill | What it does | When it triggers |
 |-------|--------------|------------------|
-| **memory-map** | Snapshots your session — what was built, decided, pending — to persistent memory | At session close, or when you say "save this" |
+| **memory-map** | Snapshots your session — what was built, decided, pending — to persistent memory, and restores one project from its `STATUS.md` | At session close, when you say "save this", or "catch me up on [project]" |
 | **memory-recall** | Loads stored memory and surfaces what is relevant right now | At session start, or when you ask "what do you remember?" |
 | **memory-prune** | Identifies stale entries and proposes a cleanup, with your confirmation | When memory gets cluttered, or on request |
 
@@ -48,7 +48,33 @@ Compatible with the open SKILL.md format, also works in Cursor, Windsurf, Codex 
 
 ## Install
 
-### Claude Code (one line)
+### Claude Code plugin (recommended)
+
+**Upgrading from `install.sh` or a manual copy?** Before installing, remove the old skill folders so the skills do not load twice: `~/.claude/skills/memory-map`, `~/.claude/skills/memory-recall`, `~/.claude/skills/memory-prune`, and any `~/.claude/skills/memory-*.backup-*` folders the installer left behind. Your `~/.claude/memory.md` stays as it is. If you also uploaded the skills on claude.ai and they show up in Claude Code, turn those off in claude.ai Settings → Skills.
+
+```
+/plugin install memory-map --marketplace shandar/memory-map
+```
+
+On older Claude Code versions, add the marketplace first:
+
+```
+/plugin marketplace add shandar/memory-map
+/plugin install memory-map@memory-map-marketplace
+```
+
+That gives you the three skills plus four commands:
+
+| Command | What it does |
+|---------|--------------|
+| `/memory-map:save` | Snapshot this session: global index + this project's `STATUS.md` |
+| `/memory-map:status [project]` | Restore one project from its `STATUS.md` |
+| `/memory-map:recall [topic]` | Cross-project briefing from memory |
+| `/memory-map:prune` | Propose a cleanup; nothing changes without your yes |
+
+### Without the plugin system
+
+#### Claude Code (one line)
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/shandar/memory-map/main/install.sh | bash
@@ -56,7 +82,7 @@ curl -fsSL https://raw.githubusercontent.com/shandar/memory-map/main/install.sh 
 
 The installer clones the repo, copies all three skills to `~/.claude/skills/`, initialises `~/.claude/memory.md`, and backs up any pre-existing skill folders.
 
-### Claude Code (manual)
+#### Claude Code (manual)
 
 ```bash
 git clone https://github.com/shandar/memory-map.git
@@ -142,8 +168,9 @@ The skills activate on natural language, no commands to memorise.
 
 | Skill | Trigger phrases |
 |-------|----------------|
-| **memory-map** | save this · snapshot this · memorise this chat · update your memory · store this session · don't lose this context |
-| **memory-recall** | what do you remember · what's the context · where did we leave off · catch me up · show me the memory map |
+| **memory-map** (save) | save this · snapshot this · memorise this chat · update your memory · store this session · don't lose this context |
+| **memory-map** (restore one project) | catch me up on [project] · [project] status · restore context · where did I/we leave off *(inside a project folder that has a `STATUS.md`)* |
+| **memory-recall** (all projects) | what do you remember · what's the context · show me the memory map · where did I/we leave off · catch me up *(when no project is named and the folder has no `STATUS.md`)* |
 | **memory-prune** | clean up memory · prune memory · consolidate memory · trim the memory map |
 
 All three also fire **proactively** when conditions are right — at the close of a productive session, at the start of a new one, or when memory is approaching its limits.
@@ -178,6 +205,10 @@ You can edit this file directly. memory-prune will respect your edits.
 
 Stored via Anthropic's `memory_user_edits` tool. Visible in Settings → Memory. Works the same way functionally — same category labels, same density rules, just managed via API instead of file.
 
+### Per project: `STATUS.md`
+
+The global store above is the cross-project index. Each project also gets a `STATUS.md` in its root with five sections: TL;DR, Last session, Next up, Open threads, Key locations. On the first write in a project, `STATUS.md` is added to that project's `.gitignore`; remove the line if you want to commit it for team handoff. On claude.ai, the skill produces `STATUS.md` as an artifact for you to save.
+
 ---
 
 ## Design principles
@@ -199,8 +230,13 @@ memory-map/
 ├── LICENSE                            ← MIT
 ├── CHANGELOG.md                       ← version history
 ├── CONTRIBUTING.md                    ← how to contribute
-├── marketplace.json                   ← plugin manifest
-├── install.sh                         ← one-line installer
+├── SUBMISSION.md                      ← plugin directory submission notes
+├── .claude-plugin/
+│   ├── plugin.json                    ← plugin manifest
+│   ├── icon.png                       ← listing icon (source: docs/brand/icon-source.svg)
+│   └── marketplace.json               ← marketplace manifest (this repo)
+├── commands/                          ← /memory-map:save, :status, :recall, :prune
+├── install.sh                         ← installer for non-plugin setups
 └── skills/
     ├── memory-map/
     │   ├── SKILL.md
@@ -226,9 +262,9 @@ Each skill is self-contained and can be used independently. The plugin bundles t
 ## Roadmap
 
 - [x] **v0.1** — memory-map, memory-recall, memory-prune
-- [ ] **v0.2** — multi-project memory (separate stores per repo or workspace)
-- [ ] **v0.3** — memory export/import for sharing project context across teams
-- [ ] **v0.4** — memory diffing across sessions ("what changed since last week?")
+- [x] **v0.2** — two-tier memory (global index + per-project `STATUS.md`), READ mode, Claude Code plugin and commands
+- [ ] **v0.3** — local mirror at `~/.memory-map/` (unlimited size) and a generated cross-project `PROJECTS_INDEX.md`
+- [ ] **Later** — memory export/import for teams, memory diffing across sessions ("what changed since last week?")
 
 Track progress in [issues](https://github.com/shandar/memory-map/issues) and [discussions](https://github.com/shandar/memory-map/discussions).
 

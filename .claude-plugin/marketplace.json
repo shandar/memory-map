@@ -1,0 +1,28 @@
+{
+  "name": "memory-map-marketplace",
+  "owner": {
+    "name": "Shandar Junaid",
+    "email": "hello@affordance.design"
+  },
+  "metadata": {
+    "description": "memory-map: a complete memory loop for Claude",
+    "version": "0.2.0"
+  },
+  "plugins": [
+    {
+      "name": "memory-map",
+      "source": "./",
+      "description": "Snapshot, recall, and prune project context across sessions. A global cross-project index plus a STATUS.md in each project, so context survives long absences. Markdown only: no hooks, no scripts, no keys.",
+      "version": "0.2.0",
+      "author": {
+        "name": "Shandar Junaid",
+        "email": "hello@affordance.design"
+      },
+      "homepage": "https://github.com/shandar/memory-map",
+      "repository": "https://github.com/shandar/memory-map",
+      "license": "MIT",
+      "keywords": ["memory", "context", "session-management", "status", "productivity"],
+      "category": "productivity"
+    }
+  ]
+}

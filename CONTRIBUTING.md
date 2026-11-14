@@ -1,6 +1,6 @@
 # Contributing to memory-map
 
-Thanks for taking interest. This is an open project under MIT — contributions are welcome, especially around the v0.2 roadmap items.
+Thanks for taking interest. This is an open project under MIT — contributions are welcome, especially around the v0.3 roadmap items.
 
 ## Ways to contribute
 

@@ -61,4 +61,4 @@ Next: TIU detailed agenda, institutional brief.
 
 ## After writing
 
-Return to SKILL.md Step 4 and present the memory map summary to the user.
+Return to SKILL.md Step 4 (update STATUS.md), then Step 5 (present the memory map summary to the user).

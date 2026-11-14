@@ -1,10 +1,12 @@
 ---
 name: memory-recall
 description: >
-  Load and summarise stored project memory at the start of a session, or whenever the user asks
-  what Claude remembers about their work. Use this skill when the user says things like "what do
-  you remember", "what's the context", "where did we leave off", "catch me up", "what's the
-  current state", "show me the memory map", or "what do you know about my projects". Also trigger
+  Load and summarise the cross-project memory index at the start of a session, or whenever the
+  user asks what Claude remembers about their work. Use this skill when the user says things like
+  "what do you remember", "what's the context", "what's the current state", "show me the memory
+  map", or "what do you know about my projects"; and "where did I/we leave off" or "catch me up"
+  only when no project is named and the current folder has no STATUS.md. To restore one project
+  from its STATUS.md ("catch me up on [project]", "[project] status"), use memory-map. Also trigger
   proactively at the start of any new conversation if a memory store exists — surface the current
   state and pending items without being asked, so the user does not have to re-orient Claude.
   Pairs with memory-map (which writes memory) and memory-prune (which cleans it). Together they
@@ -18,6 +20,19 @@ last one ended.
 
 Works in **claude.ai** (reads via `memory_user_edits` view) and **Claude Code**
 (reads `~/.claude/memory.md`). Detected automatically.
+
+---
+
+## Scope
+
+**Check first (Claude Code).** Before anything else, run `test -f STATUS.md` in the cwd. If it
+exists and the request was an open "where did I/we leave off", "catch me up", or "what was I
+doing", switch to the memory-map skill in READ mode and stop here.
+
+- No project named and no `STATUS.md` in the cwd → this skill: the cross-project briefing.
+- A project is named, or the cwd has a `STATUS.md` → memory-map READ mode restores that project.
+- When this skill runs anyway (for example "what do you remember") in a Claude Code folder that
+  has a `STATUS.md`, mention it in the briefing so the user can ask for the full project restore.
 
 ---
 

@@ -1,5 +1,35 @@
 # Changelog
 
+## [0.2.0] — 2026-11-14
+
+### Claude Code plugin release
+
+memory-map now installs as a Claude Code plugin:
+
+```
+/plugin install memory-map --marketplace shandar/memory-map
+```
+
+**Added**
+- Two-tier memory: the global cross-project index plus a per-project `STATUS.md` (TL;DR, Last session, Next up, Open threads, Key locations), auto-added to `.gitignore` on first write
+- READ mode in `memory-map`: a 30-second briefing that restores one project from its `STATUS.md`
+- Plugin manifests at `.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json`
+- Commands: `/memory-map:save`, `/memory-map:status`, `/memory-map:recall`, `/memory-map:prune` (user-invoked only, so a plain "save this file" never fires a memory save)
+- Project entries in the global index record a `Root:` path, so `/memory-map:status <project>` can find the project's `STATUS.md` from any folder without scanning the disk
+- Claude Code backs up `~/.claude/memory.md` before every change and edits only the sections that change
+
+**Fixed**
+- Claude Code saves: the global tier now goes to `~/.claude/memory.md`. The v0.2 skill draft only called the claude.ai memory API, which Claude Code does not have
+- `STATUS.md` and `.gitignore` are never written into the home folder; the skill asks for the project root instead
+
+**Changed**
+- `memory-recall` is the cross-project briefing; `memory-map` READ mode restores one project. "Where did I leave off" goes to `memory-map` when a project is named or the folder has a `STATUS.md`, and to `memory-recall` otherwise
+
+**Removed**
+- Root `marketplace.json`. Its custom schema was not read by any tool; the `.claude-plugin/` manifests replace it
+
+Existing `~/.claude/memory.md` files are read as they are. No migration needed.
+
 ## [0.1.0] — 2026-04-27
 
 ### Initial release — Memory Map plugin

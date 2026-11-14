@@ -11,7 +11,7 @@ TEMP_DIR="$(mktemp -d)"
 
 echo "──────────────────────────────────────────"
 echo "  memory-map plugin installer"
-echo "  v0.1.0 · MIT · Affordance Design Studio"
+echo "  v0.2.0 · MIT · Affordance Design Studio"
 echo "──────────────────────────────────────────"
 echo ""
 
