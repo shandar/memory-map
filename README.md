@@ -232,6 +232,7 @@ memory-map/
 ├── SUBMISSION.md                      ← plugin directory submission notes
 ├── .claude-plugin/
 │   ├── plugin.json                    ← plugin manifest
+│   ├── icon.png                       ← listing icon (source: docs/brand/icon-source.svg)
 │   └── marketplace.json               ← marketplace manifest (this repo)
 ├── commands/                          ← /memory-map:save, :status, :recall, :prune
 ├── install.sh                         ← installer for non-plugin setups

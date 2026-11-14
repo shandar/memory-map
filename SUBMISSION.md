@@ -2,7 +2,9 @@
 
 Pre-written answers for the Claude plugin directory submission form. Copy each block into the matching field.
 
-**Before submitting:** add a square icon at `.claude-plugin/icon.png` (512 to 2048 px, PNG, under 2 MB). The directory takes the listing icon from the first submission only, and later changes do not update it. Then run:
+**Icon:** `.claude-plugin/icon.png` (1024 px, rendered from `docs/brand/icon-source.svg`). The directory takes the listing icon from the first submission only, and later changes do not update it, so confirm you are happy with it before you submit.
+
+**Before submitting, run:**
 
 ```bash
 claude plugin validate . --profile directory --strict
