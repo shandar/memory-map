@@ -3,7 +3,7 @@
 **A complete memory loop for Claude. Snapshot, recall, and prune project context across sessions.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
-[![Version](https://img.shields.io/badge/version-0.2.0-orange.svg)](https://github.com/shandar/memory-map/releases)
+[![Version](https://img.shields.io/badge/version-0.2.1-orange.svg)](https://github.com/shandar/memory-map/releases)
 [![Compatible](https://img.shields.io/badge/works%20with-Claude%20Code%20%7C%20claude.ai-blue.svg)](#install)
 [![SKILL.md](https://img.shields.io/badge/format-SKILL.md-purple.svg)](https://docs.claude.com)
 
@@ -74,23 +74,17 @@ That gives you the three skills plus four commands:
 
 ### Without the plugin system
 
-#### Claude Code (one line)
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/shandar/memory-map/main/install.sh | bash
-```
-
-The installer clones the repo, copies all three skills to `~/.claude/skills/`, initialises `~/.claude/memory.md`, and backs up any pre-existing skill folders.
-
 #### Claude Code (manual)
 
 ```bash
 git clone https://github.com/shandar/memory-map.git
 cd memory-map
-cp -r skills/* ~/.claude/skills/
+cp -r plugins/memory-map/skills/* ~/.claude/skills/
 ```
 
 Restart Claude Code. The skills load automatically.
+
+Prefer a script? After cloning, read `install.sh` and run it with `bash install.sh`. It copies the three skills to `~/.claude/skills/`, initialises `~/.claude/memory.md`, and backs up any pre-existing skill folders.
 
 ### claude.ai
 
@@ -99,7 +93,7 @@ Each skill installs separately on claude.ai:
 1. Download the [latest release](https://github.com/shandar/memory-map/releases)
 2. Extract the archive
 3. Open Settings → Skills → Install from file
-4. Upload `skills/memory-map/SKILL.md`, then `memory-recall/SKILL.md`, then `memory-prune/SKILL.md`
+4. Upload `plugins/memory-map/skills/memory-map/SKILL.md`, then `memory-recall/SKILL.md`, then `memory-prune/SKILL.md` from the same folder
 
 After all three are installed, they trigger automatically based on what you say.
 
@@ -231,28 +225,29 @@ memory-map/
 ├── CHANGELOG.md                       ← version history
 ├── CONTRIBUTING.md                    ← how to contribute
 ├── SUBMISSION.md                      ← plugin directory submission notes
-├── .claude-plugin/
-│   ├── plugin.json                    ← plugin manifest
-│   ├── icon.png                       ← listing icon (source: docs/brand/icon-source.svg)
-│   └── marketplace.json               ← marketplace manifest (this repo)
-├── commands/                          ← /memory-map:save, :status, :recall, :prune
 ├── install.sh                         ← installer for non-plugin setups
-└── skills/
-    ├── memory-map/
-    │   ├── SKILL.md
-    │   └── references/
-    │       ├── claude-ai.md           ← memory_user_edits API
-    │       └── claude-code.md         ← ~/.claude/memory.md file
-    ├── memory-recall/
-    │   ├── SKILL.md
-    │   └── references/
-    │       ├── claude-ai.md
-    │       └── claude-code.md
-    └── memory-prune/
-        ├── SKILL.md
-        └── references/
-            ├── claude-ai.md
-            └── claude-code.md
+├── .claude-plugin/
+│   └── marketplace.json               ← marketplace manifest (this repo)
+├── docs/brand/icon-source.svg         ← source for the listing icon
+└── plugins/memory-map/                ← the plugin itself: markdown, JSON and one PNG
+    ├── .claude-plugin/
+    │   ├── plugin.json                ← plugin manifest
+    │   └── icon.png                   ← listing icon
+    ├── README.md
+    ├── LICENSE
+    ├── commands/                      ← /memory-map:save, :status, :recall, :prune
+    └── skills/
+        ├── memory-map/
+        │   ├── SKILL.md
+        │   └── references/
+        │       ├── claude-ai.md       ← memory_user_edits API
+        │       └── claude-code.md     ← ~/.claude/memory.md file
+        ├── memory-recall/
+        │   ├── SKILL.md
+        │   └── references/
+        └── memory-prune/
+            ├── SKILL.md
+            └── references/
 ```
 
 Each skill is self-contained and can be used independently. The plugin bundles them for one-command install.
