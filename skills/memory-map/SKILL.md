@@ -8,12 +8,15 @@ description: >
   the user says "save this", "memorise this", "snapshot this", "checkpoint
   [project]", "update your memory", "store this session", "remember all of this",
   or "save progress" — also proactively at the natural close of any productive
-  session. READ mode triggers when the user says "where did I leave off", "catch
-  me up on [project]", "restore context", "what was I doing", "[project] status",
-  or returns to a project after a long gap. Works in both Claude Code (writes and
-  reads STATUS.md directly in the project folder) and Claude.ai (updates global
-  memory and emits STATUS.md content as an artifact for the user to save). Do not
-  wait to be asked if a session was clearly productive.
+  session. READ mode restores ONE project from its STATUS.md and triggers when the
+  user says "catch me up on [project]", "[project] status", "restore context", or
+  returns to a project after a long gap; "where did I leave off" and "what was I
+  doing" trigger READ mode only when a project is named or the current folder has a
+  STATUS.md. For a cross-project overview ("what do you remember", "show me the
+  memory map"), use memory-recall instead. Works in both Claude Code (writes
+  ~/.claude/memory.md and STATUS.md in the project folder) and Claude.ai (updates
+  global memory and emits STATUS.md content as an artifact for the user to save).
+  Do not wait to be asked if a session was clearly productive.
 ---
 
 # Memory Map Skill — v0.2
@@ -51,8 +54,9 @@ Triggered when:
 ### READ mode — restore context
 
 Triggered when:
-- User asks for orientation: "where did I leave off", "catch me up on [project]",
-  "what was I doing", "restore context"
+- User asks for orientation about one project: "catch me up on [project]",
+  "restore context", or "where did I leave off" / "what was I doing" when a project
+  is named or the cwd has a STATUS.md
 - User asks for status: "[project] status", "status check on [project]"
 - User opens a session after a long gap and asks an open question about a project
 - User asks "what's pending on [project]"
@@ -196,8 +200,9 @@ note.
 
 ### Step 1 — Identify scope
 
-- "Catch me up" / "where did I leave off" with no project named → ask which
-  project, OR present the global cross-project snapshot if user wants the wide view
+- "Catch me up" / "where did I leave off" with no project named:
+  - cwd has a `STATUS.md` → restore that project
+  - otherwise → hand off to memory-recall for the cross-project briefing
 - "[project] status" → scoped to that project, skip the question
 
 ### Step 2 — Load both tiers
