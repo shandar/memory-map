@@ -11,7 +11,7 @@ TEMP_DIR="$(mktemp -d)"
 
 echo "──────────────────────────────────────────"
 echo "  memory-map plugin installer"
-echo "  v0.2.0 · MIT · Affordance Design Studio"
+echo "  v0.2.1 · MIT · Affordance Design Studio"
 echo "──────────────────────────────────────────"
 echo ""
 
@@ -32,7 +32,7 @@ for skill in memory-map memory-recall memory-prune; do
     echo "  ⚠  ${skill} already exists — backing up to ${skill}.backup-$(date +%Y%m%d)"
     mv "${SKILLS_DIR}/${skill}" "${SKILLS_DIR}/${skill}.backup-$(date +%Y%m%d)"
   fi
-  cp -r "${TEMP_DIR}/memory-map/skills/${skill}" "${SKILLS_DIR}/${skill}"
+  cp -r "${TEMP_DIR}/memory-map/plugins/memory-map/skills/${skill}" "${SKILLS_DIR}/${skill}"
   echo "  ✓ Installed ${skill}"
 done
 
