@@ -4,7 +4,7 @@ description: >
   Load and summarise the cross-project memory index at the start of a session, or whenever the
   user asks what Claude remembers about their work. Use this skill when the user says things like
   "what do you remember", "what's the context", "what's the current state", "show me the memory
-  map", or "what do you know about my projects"; and "where did we leave off" or "catch me up"
+  map", or "what do you know about my projects"; and "where did I/we leave off" or "catch me up"
   only when no project is named and the current folder has no STATUS.md. To restore one project
   from its STATUS.md ("catch me up on [project]", "[project] status"), use memory-map. Also trigger
   proactively at the start of any new conversation if a memory store exists — surface the current
@@ -24,6 +24,10 @@ Works in **claude.ai** (reads via `memory_user_edits` view) and **Claude Code**
 ---
 
 ## Scope
+
+**Check first (Claude Code).** Before anything else, run `test -f STATUS.md` in the cwd. If it
+exists and the request was an open "where did I/we leave off", "catch me up", or "what was I
+doing", switch to the memory-map skill in READ mode and stop here.
 
 - No project named and no `STATUS.md` in the cwd → this skill: the cross-project briefing.
 - A project is named, or the cwd has a `STATUS.md` → memory-map READ mode restores that project.

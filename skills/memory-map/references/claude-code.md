@@ -47,7 +47,15 @@ Rules:
 cat ~/.claude/memory.md
 ```
 
-**Replace the whole file after updates** (safest approach — edit in memory, write once):
+**Back up before any change:**
+```bash
+[ -f ~/.claude/memory.md ] && cp ~/.claude/memory.md ~/.claude/memory.md.backup-$(date +%Y%m%d)
+```
+
+**Edit only the sections that change.** Use your file-edit tool to replace a single
+`## N. LABEL` section in place, so entries you are not changing are never retyped.
+
+**Create the file only when it does not exist yet:**
 ```bash
 cat > ~/.claude/memory.md << 'EOF'
 # Claude Memory Map
@@ -98,4 +106,4 @@ This ensures Claude Code loads the pointer even if it does not auto-read memory.
 
 ## After writing
 
-Return to SKILL.md Step 4 and present the memory map summary to the user.
+Return to SKILL.md Step 4 (update STATUS.md), then Step 5 (present the memory map summary to the user).

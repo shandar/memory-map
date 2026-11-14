@@ -1,4 +1,5 @@
 ---
+disable-model-invocation: true
 description: Restore one project's context from its STATUS.md
 argument-hint: "[project]"
 ---

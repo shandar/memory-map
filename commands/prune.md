@@ -1,4 +1,5 @@
 ---
+disable-model-invocation: true
 description: Propose a cleanup of stale or duplicate memory entries
 ---
 

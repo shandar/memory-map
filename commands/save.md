@@ -1,4 +1,5 @@
 ---
+disable-model-invocation: true
 description: Snapshot this session to memory (global index + this project's STATUS.md)
 argument-hint: "[project or note]"
 ---

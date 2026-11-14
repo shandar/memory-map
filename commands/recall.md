@@ -1,4 +1,5 @@
 ---
+disable-model-invocation: true
 description: Brief me on everything in memory across projects
 argument-hint: "[topic]"
 ---
