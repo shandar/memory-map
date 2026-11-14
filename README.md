@@ -25,7 +25,7 @@ Three skills that give Claude a working memory across sessions:
 
 | Skill | What it does | When it triggers |
 |-------|--------------|------------------|
-| **memory-map** | Snapshots your session — what was built, decided, pending — to persistent memory | At session close, or when you say "save this" |
+| **memory-map** | Snapshots your session — what was built, decided, pending — to persistent memory, and restores one project from its `STATUS.md` | At session close, when you say "save this", or "catch me up on [project]" |
 | **memory-recall** | Loads stored memory and surfaces what is relevant right now | At session start, or when you ask "what do you remember?" |
 | **memory-prune** | Identifies stale entries and proposes a cleanup, with your confirmation | When memory gets cluttered, or on request |
 
@@ -50,6 +50,8 @@ Compatible with the open SKILL.md format, also works in Cursor, Windsurf, Codex 
 
 ### Claude Code plugin (recommended)
 
+**Upgrading from `install.sh` or a manual copy?** Before installing, remove the old skill folders so the skills do not load twice: `~/.claude/skills/memory-map`, `~/.claude/skills/memory-recall`, `~/.claude/skills/memory-prune`, and any `~/.claude/skills/memory-*.backup-*` folders the installer left behind. Your `~/.claude/memory.md` stays as it is. If you also uploaded the skills on claude.ai and they show up in Claude Code, turn those off in claude.ai Settings → Skills.
+
 ```
 /plugin install memory-map --marketplace shandar/memory-map
 ```
@@ -69,8 +71,6 @@ That gives you the three skills plus four commands:
 | `/memory-map:status [project]` | Restore one project from its `STATUS.md` |
 | `/memory-map:recall [topic]` | Cross-project briefing from memory |
 | `/memory-map:prune` | Propose a cleanup; nothing changes without your yes |
-
-**Already used `install.sh` or copied the skills by hand?** Remove `~/.claude/skills/memory-map`, `~/.claude/skills/memory-recall`, and `~/.claude/skills/memory-prune` first, so the skills do not load twice. Your `~/.claude/memory.md` stays as it is.
 
 ### Without the plugin system
 
@@ -168,8 +168,9 @@ The skills activate on natural language, no commands to memorise.
 
 | Skill | Trigger phrases |
 |-------|----------------|
-| **memory-map** | save this · snapshot this · memorise this chat · update your memory · store this session · don't lose this context |
-| **memory-recall** | what do you remember · what's the context · where did we leave off · catch me up · show me the memory map |
+| **memory-map** (save) | save this · snapshot this · memorise this chat · update your memory · store this session · don't lose this context |
+| **memory-map** (restore one project) | catch me up on [project] · [project] status · restore context · where did I/we leave off *(inside a project folder that has a `STATUS.md`)* |
+| **memory-recall** (all projects) | what do you remember · what's the context · show me the memory map · where did I/we leave off · catch me up *(when no project is named and the folder has no `STATUS.md`)* |
 | **memory-prune** | clean up memory · prune memory · consolidate memory · trim the memory map |
 
 All three also fire **proactively** when conditions are right — at the close of a productive session, at the start of a new one, or when memory is approaching its limits.

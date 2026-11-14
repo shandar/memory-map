@@ -14,7 +14,9 @@ memory-map now installs as a Claude Code plugin:
 - Two-tier memory: the global cross-project index plus a per-project `STATUS.md` (TL;DR, Last session, Next up, Open threads, Key locations), auto-added to `.gitignore` on first write
 - READ mode in `memory-map`: a 30-second briefing that restores one project from its `STATUS.md`
 - Plugin manifests at `.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json`
-- Commands: `/memory-map:save`, `/memory-map:status`, `/memory-map:recall`, `/memory-map:prune`
+- Commands: `/memory-map:save`, `/memory-map:status`, `/memory-map:recall`, `/memory-map:prune` (user-invoked only, so a plain "save this file" never fires a memory save)
+- Project entries in the global index record a `Root:` path, so `/memory-map:status <project>` can find the project's `STATUS.md` from any folder without scanning the disk
+- Claude Code backs up `~/.claude/memory.md` before every change and edits only the sections that change
 
 **Fixed**
 - Claude Code saves: the global tier now goes to `~/.claude/memory.md`. The v0.2 skill draft only called the claude.ai memory API, which Claude Code does not have

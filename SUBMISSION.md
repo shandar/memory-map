@@ -91,8 +91,11 @@ Context survives long absences. Come back to a project after three weeks, run /m
 
 ### Security and permissions
 ```
-Memory Map is markdown only: three skills and four commands, with no hooks, scripts, MCP servers, or network access. It reads and writes only:
-- ~/.claude/memory.md (the global index, in Claude Code)
-- STATUS.md and .gitignore in the current project root (it asks first if the folder is not a project, and never writes to the home folder)
-On claude.ai it uses the built-in memory tool and produces STATUS.md as an artifact. The skills never store passwords, API keys, or payment details, only where such things live. Pruning always asks for confirmation and backs up memory.md first.
+Memory Map is markdown only: three skills and four user-invoked commands, with no hooks, scripts, MCP servers, or network access. In Claude Code it reads and writes only:
+- ~/.claude/memory.md (the global index) and dated backups of it (~/.claude/memory.md.backup-YYYYMMDD), made before every change
+- STATUS.md and .gitignore in the project root. It asks for the project root if the current folder is not a project, and never writes STATUS.md or .gitignore into the home folder itself
+- Optionally, a two-line "Persistent Memory" pointer at the top of the project's CLAUDE.md
+On claude.ai it uses the built-in memory tool and produces STATUS.md as an artifact for you to save.
+
+Saving replaces entries it supersedes, so the index stays current instead of piling up. Pruning, which removes or merges entries, always proposes first and changes nothing without your yes. The skills never store passwords, API keys, or payment details, only where such things live.
 ```
