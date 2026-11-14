@@ -84,7 +84,7 @@ cp -r plugins/memory-map/skills/* ~/.claude/skills/
 
 Restart Claude Code. The skills load automatically.
 
-Prefer a script? After cloning, read `install.sh` and run it with `bash install.sh`. It copies the three skills to `~/.claude/skills/`, initialises `~/.claude/memory.md`, and backs up any pre-existing skill folders.
+Prefer a script? After cloning, read `install.sh` and run it from the clone with `bash install.sh`. It installs from that clone, so what you read is what you get: it copies the three skills to `~/.claude/skills/`, initialises `~/.claude/memory.md`, and backs up any pre-existing skill folders.
 
 ### claude.ai
 

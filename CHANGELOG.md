@@ -11,7 +11,12 @@
 **Removed**
 - The `curl | bash` one-line install from the README. Clone the repo and run `bash install.sh` after reading it, or use the plugin
 
-Install commands and skill behaviour are unchanged. Manual installs now copy from `plugins/memory-map/skills/`.
+**Fixed**
+- `install.sh` installs from the clone it runs in instead of re-downloading `main`, checks its source before touching `~/.claude/skills`, and fails loudly (`set -euo pipefail`)
+- Backups of `~/.claude/memory.md` and of replaced skill folders are timestamped to the second, so a second save on the same day no longer overwrites the first backup
+- The optional `CLAUDE.md` pointer is only added after the user says yes
+
+Install commands are unchanged. Manual installs now copy from `plugins/memory-map/skills/`.
 
 ## [0.2.0] — 2026-11-14
 

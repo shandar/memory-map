@@ -120,7 +120,7 @@ Consolidated: 2 → 1
   unless the user explicitly says so — these are foundational.
 - **Always preserve a backup** before pruning Claude Code memory:
   ```bash
-  cp ~/.claude/memory.md ~/.claude/memory.md.backup-$(date +%Y%m%d)
+  cp ~/.claude/memory.md ~/.claude/memory.md.backup-$(date +%Y%m%d-%H%M%S)
   ```
 - **One action at a time** for claude.ai memory — line numbers shift after every operation.
 

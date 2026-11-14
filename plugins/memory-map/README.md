@@ -45,7 +45,7 @@ You can also just talk: "save this", "catch me up on [project]", "what do you re
 
 ## What it touches
 
-Markdown only: no hooks, scripts, MCP servers, or network calls. In Claude Code it reads and writes `~/.claude/memory.md` (with a dated backup before each change), and `STATUS.md` plus `.gitignore` in the project root. It asks for the project root if the current folder is not a project, and never writes those files into your home folder. It never stores passwords, API keys, or payment details, only where such things live.
+Markdown only: no hooks, scripts, MCP servers, or network calls. In Claude Code it reads and writes `~/.claude/memory.md` (with a timestamped backup before each change), and `STATUS.md` plus `.gitignore` in the project root. If the project has a `CLAUDE.md`, it may offer to add a two-line pointer to your memory file at the top, and only does so after you say yes. It asks for the project root if the current folder is not a project, and never writes those files into your home folder. It never stores passwords, API keys, or payment details, only where such things live.
 
 ## More
 
